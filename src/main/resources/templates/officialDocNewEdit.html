@@ -1,0 +1,113 @@
+<!-- Begin Page Content -->
+<!-- DataTales Example -->
+<div class="card o-hidden border-0 shadow-lg mb-2">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="p-5">
+                    <form id="officialDocForm" method="post" enctype="multipart/form-data" th:action="@{/officialDoc/save}">
+                        <input type="hidden" name="uuid" th:value="${officialDoc.uuid}">
+                        <!-- Form Row -->
+                        <div class="row gx-3 mb-3 border-bottom" th:if="${officialDoc.number}">
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="inputDocNumber">Número do ofício</label>
+                                <input class="form-control" id="inputDocNumber" type="hidden" name="number" th:value="${officialDoc.number}" readonly>
+                                <p th:text="${'Ofício Nº ' + officialDoc.number}"></p>
+                            </div>
+                            <!-- Form Group (Author)-->
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="authorArea">Autor do ofício</label>
+                                <p id="authorArea" th:text="${author}"></p>
+                            </div>
+                            <!-- Form Group (who change)-->
+                            <div class="col-md-4" th:if="${modifier}">
+                                <label class="small mb-1" for="modifierArea">Alteração feita por</label>
+                                <p id="modifierArea" th:text="${modifier + ' - ' + #temporals.format(officialDoc.changedAt, 'dd/MM/yyyy')}"></p>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3 justify-content-between">
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="receiverTitle">Tratamento</label>
+                                <input class="form-control" list="dataListReceiverTitle" id="receiverTitle" name="receiverTitle" th:value="${officialDoc.receiverTitle}" autocomplete="off">
+                                <datalist id="dataListReceiverTitle">
+                                    <option value="Ao Excelentíssimo Senhor"></option>
+                                    <option value="A Excelentíssima Senhora"></option>
+                                </datalist>
+                                <!-- <select class="form-control" name="receiverTitle" id="receiverTitle">
+                                    <option th:value="${officialDoc.receiverTitle}" th:text="${officialDoc.receiverTitle}"></option>
+                                    <option value="Senhor">Senhor</option>
+                                    <option value="Senhora">Senhora</option>
+                                </select> -->
+                            </div>
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-3">
+                                <label class="small mb-1" for="inputDate">Data do ofício</label>
+                                <input class="form-control" id="inputDate" type="date" name="creationAt" th:value="${officialDoc.creationAt}">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-7">
+                                <label class="small mb-1" for="receiver">Destinatário</label>
+                                <input class="form-control" list="dataListReceivers" id="receiver" name="receiver" placeholder="Quem irá recerber..." th:value="${officialDoc.receiver}" autocomplete="off">
+                                <datalist id="dataListReceivers"></datalist>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="small mb-1" for="receiverPosition">Cargo do destinatário</label>
+                                <input class="form-control" id="receiverPosition" name="receiverPosition" placeholder="cargo" th:value="${officialDoc.receiverPosition}">
+                            </div>
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputSubject">Assunto</label>
+                                <input class="form-control" id="inputSubject" type="text" name="subject" placeholder="Assunto do ofício" th:value="${officialDoc.subject}" required>
+                            </div>
+                        </div>
+                        <!-- Form Group (Description)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputDescription">Descrição</label>
+                            <textarea class="form-control" name="description" id="inputDescription" rows="10" th:text="${officialDoc.description}"></textarea>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="attachmentHeader" value="true" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Usar cabeçalho no anexo</label>
+                        </div>
+                        <!-- Save changes button-->
+                        <div class="mb-3">
+                            <label class="form-label small mb-1" for="formFile">Importe um arquivo em "pdf" para anexar ao ofício</label>
+                            <div class="input-group">
+                                <input class="form-control" type="file" id="formFile" name="file">
+                                <input class="form-control" type="text" name="filePath" th:value="${officialDoc.filePath}" readonly>
+                            </div>
+                        </div>
+                        <div th:if="${officialDoc.uuid} == null" class="row gx-2">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-primary btn-block" type="submit">Criar ofício</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-secondary btn-block" type="reset" onclick="changeSecondInput()">Limpar formulário</button>
+                            </div>
+                        </div>
+                        <div th:if="${officialDoc.uuid}" class="row gx-3">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-primary btn-block" type="submit">Modificar ofício</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-secondary btn-block" type="reset">Remover alterações</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <a th:href="@{/pdf/officialDocGenerator/{uuid} (uuid=${officialDoc.uuid})}" class="btn btn-success btn-block" target="_blank">Gerar pdf</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 d-none d-lg-block bg-officialDoc-image"></div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

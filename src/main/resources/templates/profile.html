@@ -1,0 +1,229 @@
+  <!-- Main page content-->
+  <!-- Account page navigation-->
+  <div class="row">
+    <div class="col-xl-4">
+      <!-- Profile picture card-->
+      <div class="card mb-4 mb-xl-0">
+        <div class="card-header">Foto de Perfil</div>
+        <div class="card-body text-center">
+          <!-- Profile picture image-->
+          <img class="img-account-profile profileImg rounded-circle mb-2" th:src="${userData.img != null ? userData.img : '/img/blank_user.svg'}" alt="">
+          <!-- Profile picture help block-->
+          <div class="small font-italic text-muted mb-4">JPG ou PNG no máximo 10 MB</div>
+          <div class="my-2">
+            <a th:href="${'https://web.whatsapp.com/send?1=pt_BR&phone=' + userData.phone1}" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+            <a th:href="${'tel:' + userData.phone1}" class="btn btn-phone"><i class="fa fa-phone fa-shake fa-xl"></i></a>
+          </div>
+          <!-- Profile picture upload button-->
+<!--          <button class="btn btn-primary" type="button">Enviar nova foto</button>-->
+          <form class="input-group" th:action="@{/user/saveImg}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="uuid" th:value="${userData.uuid}">
+            <input type="file" name="img" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8">
+      <!-- Account details card-->
+      <div class="card mb-4">
+        <div class="card-header">
+
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="tab" id="details-tab" href="#details-content">Editar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="dossier-tab" href="#dossier-content">Dossiê</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="configuration-tab" href="#configuration-content">Configuração</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="newClassroom-tab" href="#changePassword-content">Segurança</a>
+            </li>
+          </ul>
+
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="details-content">
+
+              <form method="post" enctype="multipart/form-data" th:action="@{/user/saveUser}">
+                <!-- Form Group (username)-->
+                <div class="mb-3">
+                  <label class="small mb-1" for="inputUsername">Nome de usuário (Nome usado para entrar no sistema)</label>
+                  <input class="form-control" id="inputUsername" type="text" name="username" placeholder="Digite seu nome de usuário" th:value="${userData.username}" readonly>
+                </div>
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (first name)-->
+                  <div class="col-md-12">
+                    <label class="small mb-1" for="inputFullName">Nome completo</label>
+                    <input class="form-control" id="inputFullName" type="text" name="name" placeholder="Digite seu nome" th:value="${userData.name}" required>
+                  </div>
+                </div>
+                <!-- Form Row        -->
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (organization name)-->
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="inputCpf">CPF</label>
+                    <input class="form-control" id="inputCpf" type="text" name="cpf" placeholder="Digite seu cpf" th:value="${userData.cpf}" maxlength="14" onkeypress="formatter('###.###.###-##', this);" required>
+                    <span id="cpfError" class="text-danger"></span>
+                  </div>
+                  <!-- Form Group (organization name)-->
+                  <div class="col-md-5">
+                    <label class="small mb-1" for="floatingSelectGender">Gênero</label>
+                    <select class="form-control" id="floatingSelectGender" name="gender" aria-label="Floating label select example">
+                      <option th:value="${userData.gender}" th:text="${userData.gender}"></option>
+                      <option value="Masculino">Masculino</option>
+                      <option value="Feminino">Feminino</option>
+                      <option value="Outro">Outro</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="small mb-1" for="inputMatricula">Matrícula</label>
+                    <input class="form-control" id="inputMatricula" type="text" name="matricula" placeholder="Digite seu matrícula" th:value="${userData.matricula}">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputWorkSchedule">Expediente</label>
+                    <input class="form-control" id="inputWorkSchedule" type="text" name="work_schedule" placeholder="Digite seu expediente" th:value="${userData.work_schedule}">
+                  </div>
+                  <!-- Form Group (organization name)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputPosition">Cargo</label>
+                    <input class="form-control" id="inputPosition" type="text" name="position" placeholder="Digite seu cargo" th:value="${userData.position}">
+                  </div>
+                </div>
+                <!-- Form Group (email address)-->
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-8">
+                    <label class="small mb-1" for="inputEmailAddress">Email</label>
+                    <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Digite seu e-mail" th:value="${userData.email}">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="inputBirthday">Nascimento</label>
+                    <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Digite sua data de nascimento" th:value="${userData.birthday}">
+                  </div>
+                </div>
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (phone number)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputPhone1">Telefone 1</label>
+                    <input class="form-control" id="inputPhone1" type="tel" name="phone1" placeholder="Digite seu telefone" th:value="${userData.phone1}" maxlength="14" onkeypress="formatter('## # ####-####', this);">
+                  </div>
+                  <!-- Form Group (birthday)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputPhone2">Telefone 2</label>
+                    <input class="form-control" id="inputPhone2" type="tel" name="phone2" placeholder="Digite seu telefone" th:value="${userData.phone2}" maxlength="14" onkeypress="formatter('## # ####-####', this);">
+                  </div>
+                </div>
+                <p class="small mb-1" >Endereço</p>
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (location)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputStreet">Rua</label>
+                    <input class="form-control" id="inputStreet" type="text" name="street" placeholder="Rua" th:value="${userData.street}">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="small mb-1" for="inputNumber">Número</label>
+                    <input class="form-control" id="inputNumber" type="text" name="houseNumber" placeholder="Número" th:value="${userData.houseNumber}">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="inputNeighborhood">Bairro</label>
+                    <input class="form-control" id="inputNeighborhood" type="text" name="neighborhood" placeholder="Bairro" th:value="${userData.neighborhood}">
+                  </div>
+                  <div class="col-md-5">
+                    <label class="small mb-1" for="inputCity">Cidade</label>
+                    <input class="form-control" id="inputCity" type="text" name="city" placeholder="Cidade" th:value="${userData.city}">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="floatingSelect">Estado</label>
+                    <select class="form-control" id="floatingSelect" name="state" aria-label="Floating label select example">
+                      <option th:each="state : ${states}"
+                              th:value="${state.key}"
+                              th:text="${state.value}"
+                              th:selected="${state.key == userData.state}"></option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="small mb-1" for="inputZipCode">Cep</label>
+                    <input class="form-control" id="inputZipCode" type="text" name="zip_code" placeholder="Cep" th:value="${userData.zip_code}" maxlength="9" onkeypress="formatter('#####-###', this);">
+                  </div>
+                </div>
+                <!-- Save changes button-->
+                <input type="hidden" name="uuid" th:value="${userData.uuid}">
+                <button class="btn btn-primary" type="submit">Salvar Mudanças</button>
+              </form>
+
+            </div>
+
+            <div class="tab-pane fade" id="dossier-content">
+
+              <form method="post" th:action="@{/user/changePassword}" >
+                <!-- Form input (Obs)-->
+                <div class="mb-3">
+                  <label class="small mb-1" for="inputDescription">Observação</label>
+                  <textarea class="form-control" name="obs" id="inputDescription" rows="5" th:text="${userData.obs}"></textarea>
+                </div>
+                <!-- Form file (dossier)-->
+                <!-- <div class="mb-3">
+                  <label for="formFile" class="form-label">Importe um arquivo em "pdf" para anexar ao usuário</label>
+                  <input class="form-control" type="file" id="formFile" name="file" value="Escolha o arquivo">
+                </div> -->
+                <button class="btn btn-primary" type="submit">Salvar</button>
+              </form>
+
+            </div>
+
+            <div class="tab-pane fade" id="configuration-content">
+              <form method="post" th:action="@{/user/changeRole}" >
+                <!-- Form Group (current password)-->
+                <input type="hidden" name="uuid" th:value="${userData.uuid}">
+
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" th:checked="${userData.role.toString() == 'USER'}">
+                    <label class="form-check-label" for="flexRadioDefault1">Padrão</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" th:checked="${userData.role.toString() == 'ADMIN'}">
+                    <label class="form-check-label" for="flexRadioDefault2">Administrador</label>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Salvar</button>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="changePassword-content">
+
+                <form method="post" th:action="@{/user/changePassword}" >
+                  <!-- Form Group (current password)-->
+                  <input type="hidden" name="uuid" th:value="${userData.uuid}">
+                  <div class="mb-3">
+                    <label class="small mb-1" for="currentPassword">Senha atual</label>
+                    <input class="form-control" id="currentPassword" type="password" name="currentPassword" placeholder="Digite sua senha atual...">
+                  </div>
+                  <!-- Form Group (new password)-->
+                  <div class="mb-3">
+                    <label class="small mb-1" for="newPassword">Nova senha</label>
+                    <input class="form-control" id="newPassword" type="password" name="newPassword" placeholder="Digite a nova senha...">
+                  </div>
+                  <!-- Form Group (confirm password)-->
+                  <div class="mb-3">
+                    <label class="small mb-1" for="confirmPassword">Confirmar senha</label>
+                    <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirme a nova senha...">
+                  </div>
+                  <button class="btn btn-primary" type="submit">Salvar</button>
+                </form>
+
+            </div>
+
+          </div> <!-- End of tab-content -->
+        </div> <!-- End of card-body -->
+      </div>
+    </div>
+  </div>

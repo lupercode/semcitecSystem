@@ -1,0 +1,56 @@
+<!-- Begin Page Content -->
+<!-- DataTales Example -->
+<div class="card o-hidden border-0 shadow-lg mb-2">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="p-5">
+                    <!-- Verifica o resultado da operação e exibe a mensagem correspondente -->
+                    <div th:if="${param.success}" class="alert alert-success">
+                        Curso cadastrado com sucesso!
+                    </div>
+
+                    <div th:if="${param.fail}" class="alert alert-danger">
+                        Falha ao cadastrar curso!
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" th:action="@{/course/saveCourse}">
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputFullName">Nome do curso</label>
+                                <input class="form-control" id="inputFullName" type="text" name="name" placeholder="Nome do curso" >
+                            </div>
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone1">Carga horária</label>
+                                <input class="form-control" id="inputPhone1" type="text" name="workload" placeholder="Carga horária do curso" >
+                            </div>
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone2">Entidade</label>
+                                <input class="form-control" id="inputPhone2" type="text" name="entity" placeholder="Instituição que ofertará o curso" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputDescription">Descrição</label>
+                                <textarea class="form-control" name="description" id="inputDescription" rows="10"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <input type="hidden" name="uuid" >
+                        <button class="btn btn-primary" type="submit">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 d-none d-lg-block bg-newCourse-image"></div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

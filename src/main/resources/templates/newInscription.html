@@ -1,0 +1,48 @@
+<!-- Begin Page Content -->
+<!-- DataTales Example -->
+<div class="card o-hidden border-0 shadow-lg mb-2">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="p-5">
+
+                    <form method="post" enctype="multipart/form-data" th:action="@{/inscription/saveInscription}">
+                        <!-- Form Row-->
+                        <input type="hidden" name="author" th:value="${user.uuid}">
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputFullName">Nome do aluno</label>
+                                <input class="form-control" id="inputFullName" type="text" th:value="${student.name}" readonly>
+                                <input type="hidden" name="student" th:value="${student.uuid}">
+                            </div>
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="courseSelect">Slecione um curso</label>
+                                <select class="form-control" name="course" id="courseSelect" onchange="classroomLoad()">
+                                    <option th:each="course : ${courseList}" th:value="${course.uuid}" th:text="${course.name}"></option>
+                                </select>
+                            </div>
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="classroomSelect">Slecione uma turma</label>
+                                <select class="form-control" name="classroom" id="classroomSelect">
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <input type="hidden" name="uuid" >
+                        <button class="btn btn-primary" type="submit">Matricular</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 d-none d-lg-block bg-register-image"></div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

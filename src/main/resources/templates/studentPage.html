@@ -1,0 +1,81 @@
+<!-- Begin Page Content -->
+<!-- Content Row -->
+<div class="row">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a href="/student/newStudent" class="btn btn-primary h5 mb-0 font-weight-bold">Novo Aluno</a>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total de Alunos</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${#lists.size(studentList)}"></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-people-group fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Lista de alunos</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>email</th>
+                    <th>Telefone 1</th>
+                    <th>Cidade</th>
+                    <th>Ação</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Nome</th>
+                    <th>email</th>
+                    <th>Telefone 1</th>
+                    <th>Cidade</th>
+                    <th>Ação</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr th:each="student : ${studentList}">
+                    <td th:text="${student.name}">Tiger Nixon</td>
+                    <td th:text="${student.email}">Tiger Nixon</td>
+                    <td th:text="${student.phone1}">Tiger Nixon</td>
+                    <td th:text="${student.city}">Tiger Nixon</td>
+                    <td class="d-flex justify-content-center gap-2">
+                        <a class="btn btn-outline-primary" th:href="@{/student/studentProfile/{uuid} (uuid=${student.uuid})}" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Perfil do aluno"><i class="fa-solid fa-address-card"></i></a>
+                        <a class="btn btn-outline-success" th:href="@{/inscription/newInscription/{uuid} (uuid=${student.uuid})}" data-bs-toggle="tooltip" data-bs-title="Matricular aluno"><i class="fa-solid fa-pen-to-square"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

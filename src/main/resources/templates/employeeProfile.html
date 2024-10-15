@@ -1,0 +1,174 @@
+  <!-- Main page content-->
+  <!-- Account page navigation-->
+  <div class="row">
+    <div class="col-xl-4">
+      <!-- Profile picture card-->
+      <div class="card mb-4 mb-xl-0">
+        <div class="card-header">Foto de Perfil</div>
+        <div class="card-body text-center">
+          <!-- Profile picture image-->
+          <img class="img-account-profile profileImg rounded-circle mb-2" th:src="${employeeData.img != null ? employeeData.img : '/img/blank_user.svg'}" alt="">
+          <!-- Profile picture help block-->
+          <div class="small font-italic text-muted mb-4">JPG ou PNG no máximo 10 MB</div>
+          <div class="my-2">
+            <a th:href="${'https://web.whatsapp.com/send?1=pt_BR&phone=' + employeeData.phone1}" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+            <a th:href="${'tel:' + employeeData.phone1}" class="btn btn-phone"><i class="fa fa-phone fa-shake fa-xl"></i></a>
+          </div>
+          <!-- Profile picture upload button-->
+<!--          <button class="btn btn-primary" type="button">Enviar nova foto</button>-->
+          <form class="input-group" th:action="@{/employee/saveImg}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="uuid" th:value="${employeeData.uuid}">
+            <input type="file" name="img" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8">
+      <!-- Account details card-->
+      <div class="card mb-4">
+        <div class="card-header">
+
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="tab" id="details-tab" href="#details-content">Editar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="dossier-tab" href="#dossier-content">Dossiê</a>
+            </li>
+          </ul>
+
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="details-content">
+
+              <form method="post" enctype="multipart/form-data" th:action="@{/employee/saveEmployee}">
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (first name)-->
+                  <div class="col-md-12">
+                    <label class="small mb-1" for="inputFullName">Nome completo</label>
+                    <input class="form-control" id="inputFullName" type="text" name="name" placeholder="Digite seu nome" th:value="${employeeData.name}" required>
+                  </div>
+                </div>
+                <!-- Form Row        -->
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (organization name)-->
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="inputCpf">CPF</label>
+                    <input class="form-control" id="inputCpf" type="text" name="cpf" placeholder="Digite seu cpf" th:value="${employeeData.cpf}" maxlength="14" onkeypress="formatter('###.###.###-##', this);" required>
+                    <span id="cpfError" class="text-danger"></span>
+                  </div>
+                  <!-- Form Group (organization name)-->
+                  <div class="col-md-5">
+                    <label class="small mb-1" for="floatingSelectGender">Gênero</label>
+                    <select class="form-control" id="floatingSelectGender" name="gender" aria-label="Floating label select example">
+                      <option th:value="${employeeData.gender}" th:text="${employeeData.gender}"></option>
+                      <option value="Masculino">Masculino</option>
+                      <option value="Feminino">Feminino</option>
+                      <option value="Outro">Outro</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="small mb-1" for="inputMatricula">Matrícula</label>
+                    <input class="form-control" id="inputMatricula" type="text" name="matricula" placeholder="Digite seu matrícula" th:value="${employeeData.matricula}">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputWorkSchedule">Expediente</label>
+                    <input class="form-control" id="inputWorkSchedule" type="text" name="workSchedule" placeholder="Digite seu expediente" th:value="${employeeData.workSchedule}">
+                  </div>
+                  <!-- Form Group (organization name)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputPosition">Cargo</label>
+                    <input class="form-control" id="inputPosition" type="text" name="position" placeholder="Digite seu cargo" th:value="${employeeData.position}">
+                  </div>
+                </div>
+                <!-- Form Group (email address)-->
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-8">
+                    <label class="small mb-1" for="inputEmailAddress">Email</label>
+                    <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Digite seu e-mail" th:value="${employeeData.email}">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="inputBirthday">Nascimento</label>
+                    <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Digite sua data de nascimento" th:value="${employeeData.birthday}">
+                  </div>
+                </div>
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (phone number)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputPhone1">Telefone 1</label>
+                    <input class="form-control" id="inputPhone1" type="tel" name="phone1" placeholder="Digite seu telefone" th:value="${employeeData.phone1}" maxlength="14" onkeypress="formatter('## # ####-####', this);">
+                  </div>
+                  <!-- Form Group (birthday)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputPhone2">Telefone 2</label>
+                    <input class="form-control" id="inputPhone2" type="tel" name="phone2" placeholder="Digite seu telefone" th:value="${employeeData.phone2}" maxlength="14" onkeypress="formatter('## # ####-####', this);">
+                  </div>
+                </div>
+                <p class="small mb-1" >Endereço</p>
+                <div class="row gx-3 mb-3">
+                  <!-- Form Group (location)-->
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="inputStreet">Rua</label>
+                    <input class="form-control" id="inputStreet" type="text" name="street" placeholder="Rua" th:value="${employeeData.street}">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="small mb-1" for="inputNumber">Número</label>
+                    <input class="form-control" id="inputNumber" type="text" name="houseNumber" placeholder="Número" th:value="${employeeData.houseNumber}">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="inputNeighborhood">Bairro</label>
+                    <input class="form-control" id="inputNeighborhood" type="text" name="neighborhood" placeholder="Bairro" th:value="${employeeData.neighborhood}">
+                  </div>
+                  <div class="col-md-5">
+                    <label class="small mb-1" for="inputCity">Cidade</label>
+                    <input class="form-control" id="inputCity" type="text" name="city" placeholder="Cidade" th:value="${employeeData.city}">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small mb-1" for="floatingSelect">Estado</label>
+                    <select class="form-control" id="floatingSelect" name="state" aria-label="Floating label select example">
+                      <option th:each="state : ${states}"
+                              th:value="${state.key}"
+                              th:text="${state.value}"
+                              th:selected="${state.key == employeeData.state}"></option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="small mb-1" for="inputZipCode">Cep</label>
+                    <input class="form-control" id="inputZipCode" type="text" name="zipCode" placeholder="Cep" th:value="${employeeData.zipCode}" maxlength="9" onkeypress="formatter('#####-###', this);">
+                  </div>
+                </div>
+                <!-- Save changes button-->
+                <input type="hidden" name="uuid" th:value="${employeeData.uuid}">
+                <button class="btn btn-primary" type="submit">Salvar Mudanças</button>
+              </form>
+
+            </div>
+
+            <div class="tab-pane fade" id="dossier-content">
+
+              <form method="post" th:action="@{/employee/changePassword}" >
+                <!-- Form input (Obs)-->
+                <div class="mb-3">
+                  <label class="small mb-1" for="inputDescription">Observação</label>
+                  <textarea class="form-control" name="obs" id="inputDescription" rows="5" th:text="${employeeData.obs}"></textarea>
+                </div>
+                <!-- Form file (dossier)-->
+                <!-- <div class="mb-3">
+                  <label for="formFile" class="form-label">Importe um arquivo em "pdf" para anexar ao usuário</label>
+                  <input class="form-control" type="file" id="formFile" name="file" value="Escolha o arquivo">
+                </div> -->
+                <button class="btn btn-primary" type="submit">Salvar</button>
+              </form>
+
+            </div>
+
+          </div> <!-- End of tab-content -->
+        </div> <!-- End of card-body -->
+      </div>
+    </div>
+  </div>

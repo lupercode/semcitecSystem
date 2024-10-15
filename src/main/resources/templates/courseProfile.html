@@ -1,0 +1,168 @@
+<!-- Main page content-->
+<!-- Account page navigation-->
+<div class="row">
+  <div class="col-xl-4">
+    <!-- Profile picture card-->
+    <div class="card mb-4 mb-xl-0">
+      <div class="card-header" th:text="${course.name}"></div>
+      <div class="card-body">
+        <h6 class="card-subtitle" th:text="${course.entity}"></h6>
+        <p class="card-text"><small th:text="${course.workload}"></small><small> horas</small></p>
+        <p class="card-text" th:text="${course.description}"></p>
+
+      </div>
+      <div class="card-footer bg-transparent">
+
+        <div class="card border-bottom-danger h-100 mb-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Turmas</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <span th:text="${#lists.size(classroomList)}"></span>
+                  <span class="text-xs"> Total</span></div>
+              </div>
+              <div class="col-auto">
+                <i class="fa-solid fa-chalkboard fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div> <!-- Column end -->
+  <div class="col-xl-8">
+    <!-- Account details card-->
+    <div class="card mb-4">
+      <div class="card-header">
+
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" id="classroom-tab" href="#classroom-content">Turmas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" id="newClassroom-tab" href="#newClassroom-content">Nova turma</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" id="details-tab" href="#details-content">Editar</a>
+          </li>
+        </ul>
+
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+
+          <div class="tab-pane fade show active" id="classroom-content">
+            <div class="list-group" th:each="classroom : ${classroomList}">
+              <a th:href="@{/course/classroomProfile/{uuid} (uuid=${classroom.uuid})}" class="list-group-item list-group-item-action" aria-current="page" onclick="clicar()">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1" th:text="${classroom.name}"></h5>
+                  <small th:text="${classroom.status}"></small>
+                </div>
+                <p class="mb-1">
+                  <span th:text="${'Aulas ' + classroom.days + ' às ' + classroom.hours + ' sala ' + classroom.room}"></span>
+                </p>
+                <small id="modifierArea" th:text="${classroom.classroomCode}"></small>
+              </a>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="newClassroom-content">
+            <!-- Verifica o resultado da operação e exibe a mensagem correspondente -->
+            <form method="post" th:action="@{/course/saveClassroom}">
+              <input type="hidden" name="course" th:value="${course.uuid}">
+
+              <!-- Form Row-->
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (first name)-->
+                <div class="col-md-8">
+                  <label class="small mb-1" for="inputClassroomName">Nome da turma</label>
+                  <input class="form-control" id="inputClassroomName" type="text" name="name" placeholder="Nome do turma">
+                </div>
+                <div class="col-md-4">
+                  <label class="small mb-1" for="inputClassroomRoom">Nº da sala</label>
+                  <input class="form-control" id="inputClassroomRoom" type="text" name="room" placeholder="Nº da sala">
+                </div>
+              </div>
+              <!-- Form Row-->
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (phone number)-->
+                <div class="col-md-4">
+                  <label class="small mb-1" for="vacancies">Total de vagas</label>
+                  <input class="form-control" id="vacancies" type="number" name="vacancies" placeholder="Número de vagas">
+                </div>
+                <!-- Form Group (phone number)-->
+                <div class="col-md-4">
+                  <label class="small mb-1" for="days">Dias</label>
+                  <input class="form-control" id="days" type="text" name="days" placeholder="Dias de aula">
+                </div>
+                <!-- Form Group (phone number)-->
+                <div class="col-md-4">
+                  <label class="small mb-1" for="hours">Horário das aulas</label>
+                  <input class="form-control" id="hours" type="time" name="hours" placeholder="horário das aulas">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="small mb-1" for="inpupWhatsappLinkName">Grupo do Whatsapp</label>
+                <input class="form-control" id="inputWhatsappLinkName" type="text" name="whatsappLink" placeholder="Link para o grupo de whatsapp">
+              </div>
+              <div class="mb-3">
+                <label class="small mb-1" for="classroomInputDescription">Descrição</label>
+                <textarea class="form-control" name="description" id="classroomInputDescription" rows="5"></textarea>
+              </div>
+
+              <!-- Save changes button-->
+              <button class="btn btn-primary" type="submit">Cadastrar</button>
+            </form>
+          </div>
+
+          <div class="tab-pane fade" id="details-content">
+            <!-- Verifica o resultado da operação e exibe a mensagem correspondente -->
+            <form method="post" th:action="@{/course/saveCourse}">
+              <input type="hidden" name="uuid" th:value="${course.uuid}">
+              <!-- Form Row-->
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (first name)-->
+                <div class="col-md-12">
+                  <label class="small mb-1" for="inputFullName">Nome do curso</label>
+                  <input class="form-control" id="inputFullName" type="text" name="name" placeholder="Nome do curso" th:value="${course.name}">
+                </div>
+              </div>
+              <!-- Form Row-->
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (phone number)-->
+                <div class="col-md-6">
+                  <label class="small mb-1" for="inputPhone1">Carga horária</label>
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control" id="inputPhone1" placeholder="Horas aula" aria-label="Recipient's username" aria-describedby="basic-addon2" name="workload" th:value="${course.workload}">
+                    <span class="input-group-text" id="basic-addon2">Horas</span>
+                  </div>
+                  <!--                    <input class="form-control" id="inputPhone1" type="number" name="workload" placeholder="Carga horária do curso" >-->
+                </div>
+                <!-- Form Group (phone number)-->
+                <div class="col-md-6">
+                  <label class="small mb-1" for="inputPhone2">Entidade</label>
+                  <input class="form-control" id="inputPhone2" type="text" name="entity" placeholder="Instituição que ofertará o curso" th:value="${course.entity}">
+                </div>
+
+                <div class="mb-3">
+                  <label class="small mb-1" for="courseInputDescription">Descrição</label>
+                  <textarea class="form-control" name="description" id="courseInputDescription" rows="10" th:text="${course.description}"></textarea>
+                </div>
+              </div>
+
+              <!-- Save changes button-->
+              <button class="btn btn-primary" type="submit">Cadastrar</button>
+            </form>
+          </div>
+
+        </div> <!-- Tab-content -end -->
+      </div>
+    </div>
+  </div> <!-- Column end -->
+</div>
+
+<script>
+  document.querySelector("#details-tab").click();
+</script>

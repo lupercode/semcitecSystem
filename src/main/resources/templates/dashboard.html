@@ -1,0 +1,304 @@
+<!-- Begin Page Content -->
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Funcionários</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"th:text="${userCountItem}"></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clipboard-user fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Alunos</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${studentCountItem}"></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Cursos</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${courseCountItem}"></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-chalkboard fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Turmas</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${classroomCountItem}"></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Content Row -->
+
+<div class="row mb-4 row-gap-4">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow">
+            <!-- Card Header - Dropdown -->
+            <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Quantidade de alunos por cursos</h6>
+<!--                <div class="dropdown no-arrow">-->
+<!--                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"-->
+<!--                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>-->
+<!--                    </a>-->
+<!--                    <div class="dropdown-menu dropdown-menu-right shadow animated&#45;&#45;fade-in"-->
+<!--                         aria-labelledby="dropdownMenuLink">-->
+<!--                        <div class="dropdown-header">Dropdown Header:</div>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Another action</a>-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-bar">
+                    <canvas id="myBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Birthday List -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow h-100">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Aniversariantes do mês</h6>
+<!--                <div class="dropdown no-arrow">-->
+<!--                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"-->
+<!--                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>-->
+<!--                    </a>-->
+<!--                    <div class="dropdown-menu dropdown-menu-right shadow animated&#45;&#45;fade-in"-->
+<!--                         aria-labelledby="dropdownMenuLink">-->
+<!--                        <div class="dropdown-header">Dropdown Header:</div>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+
+                <div class="table-responsive rounded">
+                    <table class="table table-sm table-hover" width="100%" cellspacing="0">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Nasc.</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="birthdayPerson : ${birthdaysOfTheMonth}">
+                            <td th:text="${birthdayPerson.name}"></td>
+                            <td th:text="${birthdayPerson.birthday}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Content Row -->
+<!--<div class="row">-->
+
+<!--    &lt;!&ndash; Content Column &ndash;&gt;-->
+<!--    <div class="col-lg-6">-->
+
+<!--        &lt;!&ndash; Project Card Example &ndash;&gt;-->
+<!--        <div class="card shadow mb-4">-->
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">Projects</h6>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--                <h4 class="small font-weight-bold">Server Migration <span-->
+<!--                        class="float-right">20%</span></h4>-->
+<!--                <div class="progress mb-4">-->
+<!--                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"-->
+<!--                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <h4 class="small font-weight-bold">Sales Tracking <span-->
+<!--                        class="float-right">40%</span></h4>-->
+<!--                <div class="progress mb-4">-->
+<!--                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"-->
+<!--                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <h4 class="small font-weight-bold">Customer Database <span-->
+<!--                        class="float-right">60%</span></h4>-->
+<!--                <div class="progress mb-4">-->
+<!--                    <div class="progress-bar" role="progressbar" style="width: 60%"-->
+<!--                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <h4 class="small font-weight-bold">Payout Details <span-->
+<!--                        class="float-right">80%</span></h4>-->
+<!--                <div class="progress mb-4">-->
+<!--                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%"-->
+<!--                         aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <h4 class="small font-weight-bold">Account Setup <span-->
+<!--                        class="float-right">Complete!</span></h4>-->
+<!--                <div class="progress">-->
+<!--                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"-->
+<!--                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--    </div>-->
+
+<!--    <div class="col-lg-6">-->
+
+<!--        <div class="card shadow mb-4">-->
+<!--            <div class="card-header">Recent Activity</div>-->
+<!--            <div class="card-body">-->
+<!--                <div class="timeline timeline-xs">-->
+<!--                    &lt;!&ndash; Timeline Item 1&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">27 min</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-green"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">-->
+<!--                            New order placed!-->
+<!--                            <a class="fw-bold text-dark" href="#!">Order #2912</a>-->
+<!--                            has been successfully placed.-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Timeline Item 2&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">58 min</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-blue"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">-->
+<!--                            Your-->
+<!--                            <a class="fw-bold text-dark" href="#!">weekly report</a>-->
+<!--                            has been generated and is ready to view.-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Timeline Item 3&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">2 hrs</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-purple"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">-->
+<!--                            New user-->
+<!--                            <a class="fw-bold text-dark" href="#!">Valerie Luna</a>-->
+<!--                            has registered-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Timeline Item 4&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">1 day</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-yellow"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">Server activity monitor alert</div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Timeline Item 5&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">1 day</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-green"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">-->
+<!--                            New order placed!-->
+<!--                            <a class="fw-bold text-dark" href="#!">Order #2911</a>-->
+<!--                            has been successfully placed.-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Timeline Item 6&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">1 day</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-purple"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">-->
+<!--                            Details for-->
+<!--                            <a class="fw-bold text-dark" href="#!">Marketing and Planning Meeting</a>-->
+<!--                            have been updated.-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Timeline Item 7&ndash;&gt;-->
+<!--                    <div class="timeline-item">-->
+<!--                        <div class="timeline-item-marker">-->
+<!--                            <div class="timeline-item-marker-text">2 days</div>-->
+<!--                            <div class="timeline-item-marker-indicator bg-green"></div>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-item-content">-->
+<!--                            New order placed!-->
+<!--                            <a class="fw-bold text-dark" href="#!">Order #2910</a>-->
+<!--                            has been successfully placed.-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->

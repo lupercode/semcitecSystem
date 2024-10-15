@@ -1,0 +1,44 @@
+version: '3.9'
+services:
+  db:
+    image: mariadb:11.2
+    container_name: semcitecSystem-MariaDB
+    restart: always
+    environment:
+      MARIADB_DATABASE: ${DATABASE_NAME}
+      MARIADB_ROOT_PASSWORD: ${DATABASE_ROOT} 
+      MARIADB_USER: ${DATABASE_USER} 
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+    ports: 
+      - "3306:3306"
+    volumes:
+      - "~/data/db/mysql:/var/lib/mysql"
+    networks:
+      - semcitec-network
+
+  app:
+    image: semcitecsystem:1.0.0
+    container_name: semcitecSystem
+    restart: always
+    environment:
+      DATABASE_HOST: semcitecSystem-MariaDB #Nome do container do banco de dados
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      USER: cnb
+    ports:
+      - "80:8080"
+    user: root
+    volumes:
+      - "~/data/app/:/home/cnb/app/"
+      - "~/data/app/oficios:/home/cnb/app/oficios"
+      - "~/data/app/fotosPerfil:/home/cnb/app/fotosPerfil"
+    networks:
+      - semcitec-network
+    depends_on:
+      - "db"
+
+networks:
+  semcitec-network:
+    driver: bridge
+

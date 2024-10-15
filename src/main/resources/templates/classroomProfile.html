@@ -1,0 +1,154 @@
+<!-- Main page content-->
+<!-- Account page navigation-->
+<div class="row" xmlns:th="http://www.w3.org/1999/xhtml">
+  <div class="col-xl-4">
+    <!-- Profile picture card-->
+    <div class="card mb-4 mb-xl-0">
+      <h5 class="card-header" th:text="${classroom.name}"></h5>
+      <div class="card-body">
+        <p class="card-text">Código: <small th:text="${classroom.classroomCode}"></small></p>
+        <p class="card-text"><small th:text="${classroom.status}"></small></p>
+        <p class="card-text"><small>Turma do Curso de: </small><a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:href="@{/course/courseProfile/{uuid} (uuid=${classroom.course.uuid})}" th:text="${classroom.course.name}"></a></p>
+        <div class="text-center py-3">
+          <a class="btn btn-danger py-2" href="#" data-bs-toggle="modal" data-bs-target="#closeClassroom" th:if="${classroom.status.toString() == 'ATIVO'}">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Finalizar Turma
+          </a>
+          <a class="btn btn-success py-2" target="_blank" th:href="@{/certificateGenerator/classroom/{uuid} (uuid=${classroom.uuid})}" th:if="${classroom.status.toString() == 'FINALIZADO'}">
+            Emitir Certificado
+          </a>
+        </div>
+      </div>
+      <div class="card-footer text-center py-3">
+        <a th:href="${classroom.whatsappGroupLink}" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+      </div>
+    </div>
+  </div> <!-- Column end -->
+  <div class="col-xl-8">
+    <!-- Account details card-->
+    <div class="card mb-4">
+      <div class="card-header">
+
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" id="details-tab" href="#details-content">Editar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" id="studentList-tab" href="#studentList-content">Alunos</a>
+          </li>
+        </ul>
+
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+
+          <div class="tab-pane fade show active" id="details-content">
+            <!-- Verifica o resultado da operação e exibe a mensagem correspondente -->
+            <form method="post" th:action="@{/course/saveClassroom}">
+              <input type="hidden" name="course" th:value="${classroom.course.uuid}">
+              <input type="hidden" name="uuid" th:value="${classroom.uuid}">
+
+              <!-- Form Row-->
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (first name)-->
+                <div class="col-md-8">
+                  <label class="small mb-1" for="inputClassroomName">Nome da turma</label>
+                  <input class="form-control" id="inputClassroomName" type="text" name="name" placeholder="Nome do turma" th:value="${classroom.name}">
+                </div>
+                <div class="col-md-4">
+                  <label class="small mb-1" for="inputClassroomRoom">Nº da sala</label>
+                  <input class="form-control" id="inputClassroomRoom" type="text" name="room" placeholder="Nº da sala" th:value="${classroom.room}">
+                </div>
+              </div>
+              <!-- Form Row-->
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (phone number)-->
+                <div class="col-md-4">
+                  <label class="small mb-1" for="vacancies">Total de vagas</label>
+                  <input class="form-control" id="vacancies" type="number" name="vacancies" placeholder="Número de vagas" th:value="${classroom.vacancies}">
+                </div>
+                <!-- Form Group (phone number)-->
+                <div class="col-md-4">
+                  <label class="small mb-1" for="days">Dias</label>
+                  <input class="form-control" id="days" type="text" name="days" placeholder="Dias de aula" th:value="${classroom.days}">
+                </div>
+                <!-- Form Group (phone number)-->
+                <div class="col-md-4">
+                  <label class="small mb-1" for="hours">Horário das aulas</label>
+                  <input class="form-control" id="hours" type="time" name="hours" placeholder="horário das aulas" th:value="${classroom.hours}">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="small mb-1" for="inpupWhatsappLinkName">Grupo do Whatsapp</label>
+                <input class="form-control" id="inputWhatsappLinkName" type="text" name="whatsappGroupLink" placeholder="Link para o grupo de whatsapp" th:value="${classroom.whatsappGroupLink}">
+              </div>
+              <div class="mb-3">
+                <label class="small mb-1" for="inputDescription">Descrição</label>
+                <textarea class="form-control" name="description" id="inputDescription" th:text="${classroom.description}"></textarea>
+              </div>
+
+              <!-- Save changes button-->
+              <button class="btn btn-primary" type="submit">Atualizar</button>
+            </form>
+
+          </div>
+
+          <div class="tab-pane fade" id="studentList-content">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+              <tr>
+                <th style="min-width: 150px;">Nome</th>
+                <th>CPF</th>
+                <th>Matrícula</th>
+                <th>Ação</th>
+              </tr>
+              </thead>
+              <tfoot>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Matrícula</th>
+                <th>Ação</th>
+              </tr>
+              </tfoot>
+              <tbody>
+              <tr th:each="inscription : ${inscriptionList}">
+                <td th:text="${inscription.student.name}"></td>
+                <td th:text="${inscription.student.cpf}"></td>
+                <td th:text="${inscription.status}"></td>
+                <td class="d-flex justify-content-center gap-2">
+                  <a class="btn btn-outline-primary" th:href="@{/student/studentProfile/{uuid} (uuid=${inscription.student.uuid})}" data-bs-bs-toggle="tooltip" data-bs-bs-placement="left" data-bs-bs-title="Perfil do aluno"><i class="fa-solid fa-address-card"></i></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </div> <!-- Tab-content -end -->
+      </div>
+    </div>
+  </div> <!-- Column end -->
+</div>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="closeClassroom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Finalizar a Turma</h5>
+        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Selecione "Confirmar" abaixo se estiver pronto para <strong>FINALIZAR</strong> a turma</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+        <a class="btn btn-danger py-2" th:href="@{/course/closeClassroom/{uuid} (uuid=${classroom.uuid})}">
+          Confirmar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

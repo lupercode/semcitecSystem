@@ -1,0 +1,79 @@
+<!-- Begin Page Content -->
+<div class="row">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a href="/officialDoc/new" class="btn btn-primary h5 mb-0 font-weight-bold">Novo Ofício</a>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-file-circle-plus fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total de Ofícios</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${#lists.size(officialDocList)}"></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-file-invoice fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Lista de Ofícios</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Nº do ofício</th>
+                    <th>Assunto</th>
+                    <th>Destinatário</th>
+                    <th>Data</th>
+                    <th>Editar</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Nº do ofício</th>
+                    <th>Assunto</th>
+                    <th>Destinatário</th>
+                    <th>Data</th>
+                    <th>Editar</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr th:each="officialDoc : ${officialDocList}">
+                    <td th:text="${officialDoc.number}">Tiger Nixon</td>
+                    <td th:text="${officialDoc.subject}">Tiger Nixon</td>
+                    <td th:text="${officialDoc.receiver}">Tiger Nixon</td>
+                    <td th:text="${#temporals.format(officialDoc.creationAt, 'dd-MM-yyyy')}">Tiger Nixon</td>
+                    <td >
+                        <a class="btn btn-warning" th:href="@{officialDoc/edit/{uuid} (uuid=${officialDoc.uuid})}">Editar</a>
+                        <a class="btn btn-success" th:href="@{pdf/officialDocGenerator/{uuid} (uuid=${officialDoc.uuid})}" target="_blank">Pdf</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
